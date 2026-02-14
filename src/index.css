@@ -75,3 +75,18 @@ h3,
 p {
   margin: 0;
 }
+/* Mobile: Zoom/Selection/Tap-Highlight reduzieren */
+html, body {
+  overscroll-behavior: none;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+button, [role="button"] {
+  touch-action: manipulation;
+}
+

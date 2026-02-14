@@ -509,3 +509,11 @@
     min-height: 48px;
   }
 }
+/* Mobile Fit: alles in den Screen ohne Scrollen */
+@media (max-width: 520px) {
+  html, body, #root {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
