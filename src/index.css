@@ -89,4 +89,8 @@ html, body {
 button, [role="button"] {
   touch-action: manipulation;
 }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 

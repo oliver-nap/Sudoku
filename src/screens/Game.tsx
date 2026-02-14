@@ -157,7 +157,7 @@ export function Game({ save, profile, settings, onChange, onMenu }: GameProps) {
 
   return (
     <div className="screen game-screen">
-      <div className="game-card surface">
+      <div className="game-card surface viewport-safe-card">
         <div className="game-header">
           <div className="xp-mini">
             <div className="xp-mini-header">
@@ -178,30 +178,34 @@ export function Game({ save, profile, settings, onChange, onMenu }: GameProps) {
               />
             </div>
           </div>
-          <div>
-            <div className="label">Fehler</div>
-            <div className="value">{settings.showMistakes ? save.mistakes : "—"}</div>
-          </div>
-          <div>
-            <div className="label">Zeit</div>
-            <div className="value">{formatSeconds(save.elapsedSeconds)}</div>
+          <div className="game-header-stats">
+            <div className="stat">
+              <div className="label">Fehler</div>
+              <div className="value">{settings.showMistakes ? save.mistakes : "—"}</div>
+            </div>
+            <div className="stat">
+              <div className="label">Zeit</div>
+              <div className="value">{formatSeconds(save.elapsedSeconds)}</div>
+            </div>
           </div>
         </div>
 
         <div className={`grid-wrapper ${paused ? "paused" : ""}`}>
-          <Grid
-            values={save.grid.values}
-            notes={save.grid.notes}
-            givens={save.puzzle.givens}
-            selectedIndex={selectedIndex}
-            conflictIndices={conflictIndices}
-            sameDigitValue={settings.highlightSameDigit ? selectedDigit : null}
-            digitAreaRows={digitAreaSets.rows}
-            digitAreaCols={digitAreaSets.cols}
-            digitAreaBlocks={digitAreaSets.blocks}
-            selectedDigit={selectedDigit}
-            onSelect={handleSelect}
-          />
+          <div className="grid-sizer grid-viewport-safe">
+            <Grid
+              values={save.grid.values}
+              notes={save.grid.notes}
+              givens={save.puzzle.givens}
+              selectedIndex={selectedIndex}
+              conflictIndices={conflictIndices}
+              sameDigitValue={settings.highlightSameDigit ? selectedDigit : null}
+              digitAreaRows={digitAreaSets.rows}
+              digitAreaCols={digitAreaSets.cols}
+              digitAreaBlocks={digitAreaSets.blocks}
+              selectedDigit={selectedDigit}
+              onSelect={handleSelect}
+            />
+          </div>
           {paused ? (
             <div className="pause-overlay" aria-live="polite">
               <div className="pause-card">
@@ -211,22 +215,22 @@ export function Game({ save, profile, settings, onChange, onMenu }: GameProps) {
             </div>
           ) : null}
         </div>
-
-        <Numpad
-          values={save.grid.values}
-          onDigit={handleNumpadDigit}
-          onDelete={handleDelete}
-          disabled={paused}
-        />
-
-        <Toolbar
-          noteMode={noteMode}
-          onToggleNotes={() => setNoteMode((v) => !v)}
-          onUndo={() => onChange(undo(save))}
-          onMenu={() => setShowMenuConfirm(true)}
-          paused={paused}
-          onTogglePause={() => setPausedState(!paused)}
-        />
+        <div className="game-controls">
+          <Numpad
+            values={save.grid.values}
+            onDigit={handleNumpadDigit}
+            onDelete={handleDelete}
+            disabled={paused}
+          />
+          <Toolbar
+            noteMode={noteMode}
+            onToggleNotes={() => setNoteMode((v) => !v)}
+            onUndo={() => onChange(undo(save))}
+            onMenu={() => setShowMenuConfirm(true)}
+            paused={paused}
+            onTogglePause={() => setPausedState(!paused)}
+          />
+        </div>
       </div>
 
       <Modal

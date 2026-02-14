@@ -7,10 +7,13 @@
 }
 
 .game-card {
-  width: min(92vw, 520px);
-  display: grid;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
   justify-items: stretch;
+  min-height: 0;
 }
 
 .game-card .grid {
@@ -19,6 +22,41 @@
 }
 .grid-wrapper {
   position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.grid-sizer {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.grid-sizer .grid {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+.grid-viewport-safe {
+  width: min(100%, calc(100dvw - 24px));
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
 }
 
 .grid-wrapper.paused .grid {
@@ -62,6 +100,18 @@
   width: min(960px, 100%);
   display: grid;
   gap: 20px;
+}
+
+.game-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100dvh;
+  min-height: 0;
+}
+
+.game-screen .game-card {
+  flex: 1;
 }
 
 .surface {
@@ -234,13 +284,19 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  grid-template-rows: repeat(9, minmax(0, 1fr));
+  grid-template-rows: repeat(9, 1fr);
   gap: 0;
   border-radius: 18px;
   overflow: hidden;
   border: 2px solid var(--border-strong);
-  width: min(90vw, 520px);
-  justify-self: center;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  margin: 0 auto;
+  box-sizing: border-box;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -257,6 +313,11 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
 }
 
 .cell.given {
@@ -325,9 +386,11 @@
 }
 
 .game-header {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 12px;
   position: sticky;
   top: 0;
   z-index: 2;
@@ -335,6 +398,18 @@
   margin: -12px -12px 12px -12px;
   background: rgba(18, 19, 24, 0.8);
   backdrop-filter: blur(8px);
+}
+
+.game-header-stats {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.game-header-stats .stat {
+  display: grid;
+  gap: 2px;
 }
 
 .label {
@@ -355,6 +430,13 @@
   justify-content: center;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.game-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .numpad {
@@ -457,34 +539,65 @@
 
 @media (min-width: 900px) {
   .game-screen {
-    grid-template-columns: 1fr;
-    justify-items: center;
+    align-items: center;
   }
 }
 
 @media (max-width: 520px) {
   .app {
-    padding: 12px;
+    padding: 8px;
+    height: 100dvh;
+    align-items: stretch;
   }
+@media (max-width: 520px) {
+  .grid { gap: 0; }
+  }
+
 
   .game-card {
     width: 100%;
     max-width: none;
-    padding: 12px;
-    gap: 12px;
+    padding: 10px;
+    gap: 10px;
   }
 
   .game-header {
-    padding: 8px 10px;
-    margin: -10px -10px 10px -10px;
+    padding: 6px 8px;
+    margin: -8px -8px 8px -8px;
+    gap: 8px 10px;
   }
 
-  .grid-wrapper {
-    max-height: calc(100vh - 260px);
+  .xp-mini {
+    flex: 1 1 100%;
   }
+
+  .game-header-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+
 
   .grid {
     width: 100%;
+  }
+  .label {
+    font-size: 11px;
+  }
+
+  .value {
+    font-size: 16px;
+  }
+
+  .xp-mini {
+    gap: 4px;
+  }
+
+  .xp-mini-header {
+    font-size: 11px;
+  }
+
+  .xp-bar-track {
+    height: 8px;
   }
 
   .numpad {
@@ -493,27 +606,44 @@
   }
 
   .numpad .ui-button {
-    min-height: 48px;
-    font-size: 18px;
+    min-height: 44px;
+    font-size: 16px;
+    padding: 10px 12px;
   }
 
   .toolbar {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    padding-bottom: env(safe-area-inset-bottom);
   }
 
   .toolbar .ui-button,
   .toolbar .ui-icon-button {
-    min-height: 48px;
+    min-height: 42px;
+    font-size: 14px;
+    padding: 10px 12px;
   }
 }
 /* Mobile Fit: alles in den Screen ohne Scrollen */
 @media (max-width: 520px) {
   html, body, #root {
     height: 100dvh;
+  }
+  html, body, #root {
+    width: 100%;
+    overflow-x: hidden;
+  }
+  body, #root {
+    overflow-y: hidden;
+  }
+}
+
+@media (max-width: 520px) {
+  .viewport-safe-card {
+    width: min(100%, calc(100dvw - 32px));
+    margin-inline: auto;
     overflow: hidden;
+    box-sizing: border-box;
   }
 }
 
