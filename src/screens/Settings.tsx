@@ -94,7 +94,7 @@ function SettingToggle({
   return (
     <div className="setting-row">
       <div className="label">{label}</div>
-      <Toggle checked={checked} onChange={onChange} />
+      <Toggle checked={checked} onCheckedChange={onChange} />
     </div>
   );
 }

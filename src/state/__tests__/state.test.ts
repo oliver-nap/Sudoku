@@ -12,7 +12,6 @@ import {
   addCompletedGame,
   computeXpEarned,
   initialProfile,
-  xpToNext,
 } from "../profileState";
 import {
   clearSaveGame,

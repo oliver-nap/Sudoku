@@ -69,7 +69,7 @@ function initMasks(values: (Digit | null)[]): MaskState | null {
   return { rowMask, colMask, boxMask };
 }
 
-export function solveGrid(values: (Digit | null)[]): Digit[] | null {
+export function solveGrid(values: ReadonlyArray<Digit | null>): Digit[] | null {
   if (values.length !== 81) return null;
   const working = values.slice();
   const masks = initMasks(working);
@@ -139,7 +139,7 @@ export function solveGrid(values: (Digit | null)[]): Digit[] | null {
   return working as Digit[];
 }
 
-export function countSolutions(values: (Digit | null)[], limit = 2): number {
+export function countSolutions(values: ReadonlyArray<Digit | null>, limit = 2): number {
   if (values.length !== 81) return 0;
   const working = values.slice();
   const masks = initMasks(working);
