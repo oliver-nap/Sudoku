@@ -21,13 +21,24 @@ export interface GameProps {
   settings: Settings;
   onChange: (next: SaveGame) => void;
   onMenu: () => void;
+  onNewGame: () => void;
+  onSettings: () => void;
 }
-export function Game({ save, profile, settings, onChange, onMenu }: GameProps) {
+export function Game({
+  save,
+  profile,
+  settings,
+  onChange,
+  onMenu,
+  onNewGame,
+  onSettings,
+}: GameProps) {
   const [selectedIndex, setSelectedIndex] = useState<CellIndex | null>(0);
   const [selectedDigit, setSelectedDigit] = useState<Digit | null>(null);
   const [noteMode, setNoteMode] = useState(false);
   const [paused, setPaused] = useState(false);
   const [showMenuConfirm, setShowMenuConfirm] = useState(false);
+  const [showActionMenu, setShowActionMenu] = useState(false);
   const lastTickMsRef = useRef<number | null>(null);
 
   const conflictIndices = useMemo(() => {
@@ -187,6 +198,13 @@ export function Game({ save, profile, settings, onChange, onMenu }: GameProps) {
               <div className="label">Zeit</div>
               <div className="value">{formatSeconds(save.elapsedSeconds)}</div>
             </div>
+            <button
+              className="menu-button"
+              aria-label="Spielmenü öffnen"
+              onClick={() => setShowActionMenu(true)}
+            >
+              ⋯
+            </button>
           </div>
         </div>
 
@@ -231,6 +249,77 @@ export function Game({ save, profile, settings, onChange, onMenu }: GameProps) {
             onTogglePause={() => setPausedState(!paused)}
           />
         </div>
+      <Modal
+        open={showActionMenu}
+        onClose={() => setShowActionMenu(false)}
+        title="Aktionen"
+      >
+        <div className="action-menu">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setPausedState(!paused);
+              setShowActionMenu(false);
+            }}
+          >
+            {paused ? "Weiter" : "Pause"}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              onChange(undo(save));
+              setShowActionMenu(false);
+            }}
+          >
+            Undo
+          </Button>
+          <Button
+            variant={noteMode ? "primary" : "secondary"}
+            onClick={() => {
+              setNoteMode((v) => !v);
+              setShowActionMenu(false);
+            }}
+          >
+            {noteMode ? "Notizen aus" : "Notizen an"}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              handleDelete();
+              setShowActionMenu(false);
+            }}
+          >
+            Löschen
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              onNewGame();
+              setShowActionMenu(false);
+            }}
+          >
+            Neues Spiel
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              onSettings();
+              setShowActionMenu(false);
+            }}
+          >
+            Einstellungen
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              setShowMenuConfirm(true);
+              setShowActionMenu(false);
+            }}
+          >
+            Hauptmenü
+          </Button>
+        </div>
+      </Modal>
       </div>
 
       <Modal

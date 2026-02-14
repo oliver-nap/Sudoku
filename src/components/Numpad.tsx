@@ -35,7 +35,12 @@ export function Numpad({ values, onDigit, onDelete, disabled }: NumpadProps) {
           </Button>
         );
       })}
-      <Button variant="ghost" onClick={onDelete} disabled={disabled}>
+      <Button
+        variant="ghost"
+        className="numpad-delete"
+        onClick={onDelete}
+        disabled={disabled}
+      >
         Löschen
       </Button>
     </div>

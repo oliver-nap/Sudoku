@@ -148,6 +148,8 @@ function App() {
           settings={settings}
           onChange={setSaveGame}
           onMenu={() => setScreen("start")}
+          onNewGame={startNewGame}
+          onSettings={() => setScreen("settings")}
         />
       ) : null}
 
