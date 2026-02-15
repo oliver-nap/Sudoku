@@ -43,7 +43,10 @@ export function Grid({
         const isBlockedForDigit =
           selectedDigit !== null && value !== null && value !== selectedDigit;
         const isConflict = conflictIndices.has(index);
+        const scanEnabled =
+          digitAreaRows.size > 0 || digitAreaCols.size > 0 || digitAreaBlocks.size > 0;
         const isScanHighlight =
+          scanEnabled &&
           selectedDigit !== null &&
           (isDigitArea || isBlockedForDigit) &&
           !isSameDigit &&
