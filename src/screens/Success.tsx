@@ -23,12 +23,11 @@ export function Success({
 }: SuccessProps) {
   return (
     <div className="screen success-screen">
-      <div className="card surface">
+      <div className="card surface screen-card-compact success-header-card">
         <h1>Gelöst!</h1>
-        <p className="muted">Starke Leistung.</p>
+        <p className="muted screen-subtitle">Starke Leistung.</p>
       </div>
-
-      <div className="card surface">
+      <div className="card surface screen-card-compact success-stats-card">
         <div className="stats-grid">
           <div>
             <div className="label">Zeit</div>
@@ -58,7 +57,7 @@ export function Success({
         </div>
       </div>
 
-      <div className="button-row">
+      <div className="footer-actions success-footer">
         <Button onClick={onNextGame}>Nächstes Spiel</Button>
         <Button variant="ghost" onClick={onMenu}>
           Menü

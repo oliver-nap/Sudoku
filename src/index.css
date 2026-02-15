@@ -27,6 +27,19 @@
   --conflict-border: rgba(255, 84, 84, 0.85);
   --shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
   --shadow-soft: 0 6px 16px rgba(0, 0, 0, 0.35);
+  --app-vh: 100svh;
+}
+
+@supports not (height: 100svh) {
+  :root {
+    --app-vh: 100dvh;
+  }
+}
+
+@supports not (height: 100dvh) {
+  :root {
+    --app-vh: 100vh;
+  }
 }
 
 :root[data-theme="light"] {
@@ -60,7 +73,7 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: var(--app-vh);
   background: var(--bg);
   color: var(--text);
 }
@@ -76,8 +89,11 @@ p {
   margin: 0;
 }
 /* Mobile: Zoom/Selection/Tap-Highlight reduzieren */
-html, body {
+html, body, #root {
   overscroll-behavior: none;
+  height: var(--app-vh);
+  min-height: var(--app-vh);
+  overflow: hidden;
 }
 
 * {

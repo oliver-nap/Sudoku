@@ -169,7 +169,7 @@ export function Game({
   return (
     <div className="screen game-screen">
       <div className="game-card surface viewport-safe-card">
-        <div className="game-header">
+        <div className="game-header game-top">
           <div className="xp-mini">
             <div className="xp-mini-header">
               <div className="label">Level {profile.level}</div>
@@ -208,7 +208,7 @@ export function Game({
           </div>
         </div>
 
-        <div className={`grid-wrapper ${paused ? "paused" : ""}`}>
+        <div className={`grid-wrapper grid-wrap ${paused ? "paused" : ""}`}>
           <div className="grid-sizer grid-viewport-safe">
             <Grid
               values={save.grid.values}
@@ -233,7 +233,7 @@ export function Game({
             </div>
           ) : null}
         </div>
-        <div className="game-controls">
+        <div className="game-controls numpad-wrap">
           <Numpad
             values={save.grid.values}
             onDigit={handleNumpadDigit}

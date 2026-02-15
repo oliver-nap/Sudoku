@@ -11,12 +11,12 @@ export interface SettingsProps {
 export function Settings({ settings, onChange, onBack }: SettingsProps) {
   return (
     <div className="screen settings-screen">
-      <div className="card surface">
+      <div className="card surface screen-card-compact settings-header-card">
         <h1>Einstellungen</h1>
-        <p className="muted">Passe das Erlebnis an.</p>
+        <p className="muted screen-subtitle">Passe das Erlebnis an.</p>
       </div>
 
-      <div className="card surface">
+      <div className="card surface screen-card-compact settings-content-card">
         <div className="setting-row">
           <div>
             <div className="label">Theme</div>
@@ -75,7 +75,7 @@ export function Settings({ settings, onChange, onBack }: SettingsProps) {
         />
       </div>
 
-      <div className="button-row">
+      <div className="footer-actions single settings-footer">
         <Button onClick={onBack}>Zurück</Button>
       </div>
     </div>
